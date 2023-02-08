@@ -1,2 +1,2 @@
-# openapisample
-This is public repo for sample openapi
+# Open API Sample code  in Python
+Please Read the pdf to set up the app
