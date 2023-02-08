@@ -1,0 +1,73 @@
+openapi: "3.0.0"
+info:
+  title: Open Api Example with api key 'asdf1234567890'
+  version: "1.0"
+servers:
+  - url: http://localhost:9090/v1.0
+paths:
+  '/get_all_students':
+    get:
+      summary: Get students
+      description: Get List of students 
+      operationId: app.get_all_students
+      responses:
+        '200':
+          description: Return All students
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+      security:
+        - api_key: []
+  '/get_students_by_dept/{department}':
+    get:
+      summary: Filter students by department
+      description: Filter List of students by Department
+      operationId: app.get_students_by_department
+      parameters: 
+        - $ref: '#/components/parameters/department'
+      responses:
+        '200':
+          description: Return students with specific department
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+      security:
+        - api_key: []
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: X-Auth
+      in: header
+      x-apikeyInfoFunc: app.apikey_auth
+  parameters:
+    department:
+        name: department 
+        description: Student's department
+        in: path
+        required: true
+        example: Computer Science,Environmental,Medical Health
+        schema:
+          type: string
+  schemas:
+    Student:
+      type: object 
+      properties:
+        name:
+          type: string 
+          description: name of student 
+        gender:
+          type: string 
+          description: gender of student 
+        subject:
+          type: string 
+          description: subject that students study
+        department:
+          type: string 
+          description: student's department 
+        grade:
+          type: string 
+          description: student's grade 
+        
